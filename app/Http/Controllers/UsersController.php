@@ -51,7 +51,7 @@ class UsersController extends Controller
     
     public function followers($id)
     {
-        $user = User::find(id);
+        $user = User::find($id);
         $followers = $user->followers()->paginate(10);
         
         $data = [
