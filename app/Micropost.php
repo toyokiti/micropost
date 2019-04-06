@@ -28,15 +28,11 @@ class Micropost extends Model
         return back();
     }
     
-    // public function destroy($id)
-    // {
-    //     $micropost = \App\Micropost::find($id);
-
-    //     if (\Auth::id() === $micropost->user_id) {
-    //         $micropost->delete();
-    //     }
-
-    //     return back();
-    // }
+    // userモデルとの関係を定義(多対多)
+    public function favoriteIntermediateTable()
+    {
+        return $this->belongsToMany(User::class,'favorites','micropost_id','user_id');
+    }
+    
 }
     
