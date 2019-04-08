@@ -7,13 +7,16 @@ use Illuminate\Http\Request;
 class FavoriteController extends Controller
 {
     
-    public function store(Request $request)
+    // お気に入りに追加する。
+    public function store(Request $request, $id)
     {
-        
+        \Auth::user()->getFavoriteTweet($id);
+        return back();
     }
     
-    public function store(Request $request)
+    public function destroy(Request $request, $id)
     {
-
+        \Auth::user()->cancelFavoriteTweet($id);
+        return back();
     }
 }

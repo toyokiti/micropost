@@ -23,15 +23,22 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('users', 'UsersController', ['only' => ['index', 'show']]);
     
     Route::group(['prefix' => 'users/{id}'], function(){
+        // フォローアンフォローのルーティング
         Route::post('follow','UserFollowController@store')->name('user.follow');        
         Route::delete('unfollow','UserFollowController@destroy')->name('user.unfollow');
         Route::get('followings','UsersController@followings')->name('users.followings');
         Route::get('followers','UsersController@followers')->name('users.followers');
-        Route::post('favorite')->name('user.favorite');
-        Route::delete('unfavorite')->name('user.unfavorite');
-        
+        // お気に入り機能のルーティング(一覧の取得)
+        Route::get('favorites','UsersController@favorites')->name('users.favorites');
+ 
     });
  
+    // お気に入り/お気に入り解除のルーティング
+    Route::group(['prefix' => 'microposts/{id}'], function(){
+        Route::post('favorite', 'FavoriteController@store')->name('user.favorite');
+        Route::delete('unfavorite','FavoriteController@destroy')->name('user.unfavorite');
+    });    
+        
     Route::resource('microposts', 'MicropostsController',['only'=>['store','destroy']]);
 });
 

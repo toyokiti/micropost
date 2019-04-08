@@ -42,7 +42,7 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'user_follow', 'follow_id', 'user_id')->withTimestamps();
     }
     
-    // 機能:フォローしているUser達を取得する。
+    // 機能:フォローする。
     public function follow($userId)
     {
         // 既にフォローしているかの確認
@@ -61,7 +61,7 @@ class User extends Authenticatable
         }
     }
     
-    // 機能：フォローされているUser達を取得する。
+    // 機能：フォローを解除する。
     public function unfollow($userId)
     {
         // 既にフォローしているかの確認
@@ -132,8 +132,6 @@ class User extends Authenticatable
             // false(お気に入りでない)ならば、何もしない。
             return false;
         }
-        
-        
     }
     
     // 機能：すでにお気に入りかどうか判断を行う。
@@ -142,5 +140,12 @@ class User extends Authenticatable
     {
         return $this->favorites()->where('micropost_id', $micropostId)->exists();
     }
+    
+    // // 機能：タイムライン用のお気に入り一覧を表示する。
+    // public function feed_favorites(){
+    //     $favoriteList = $this->favorites()->pluck('user_id')->toArray();
+        
+        
+    // }
 
 }
